@@ -1,0 +1,27 @@
+name: Defecto
+description: Reportar un error encontrado en las pruebas
+title: "[BUG] "
+labels: ["defecto"]
+body:
+  - type: input
+    id: caso
+    attributes:
+      label: Caso de prueba que lo detectó
+      placeholder: CP-08
+  - type: dropdown
+    id: severidad
+    attributes:
+      label: Severidad
+      options: [Crítica, Alta, Media, Baja]
+    validations:
+      required: true
+  - type: textarea
+    id: reproducir
+    attributes:
+      label: Cómo reproducirlo
+    validations:
+      required: true
+  - type: textarea
+    id: obtenido
+    attributes:
+      label: Resultado obtenido vs. esperado
