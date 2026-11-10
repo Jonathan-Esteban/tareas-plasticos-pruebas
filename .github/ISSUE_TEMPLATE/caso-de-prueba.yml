@@ -1,0 +1,32 @@
+name: Caso de prueba
+description: Registrar un caso de prueba manual o automatizado
+title: "[CP-XX] "
+labels: ["caso-de-prueba"]
+body:
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de prueba
+      options: [Manual, Unitaria (Jest), Integración (Supertest), Rendimiento (k6), Seguridad (CodeQL)]
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos
+      placeholder: "1. Iniciar sesión como operario\n2. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: checkboxes
+    id: verificacion
+    attributes:
+      label: Verificación
+      options:
+        - label: Ejecutado
+        - label: Aprobado
