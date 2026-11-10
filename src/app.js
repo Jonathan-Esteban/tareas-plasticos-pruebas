@@ -19,11 +19,10 @@ function crearApp() {
 
   app.get('/salud', (req, res) => res.json({ ok: true }));
 
-  // Búsqueda rápida para el panel del operario
+  // Búsqueda: responde en JSON (nunca HTML con el texto del usuario)
   app.get('/buscar', requiereSesion, (req, res) => {
-    const q = req.query.q || '';
-    const encontradas = tareas.filter(t => t.titulo.toLowerCase().includes(String(q).toLowerCase()));
-    res.send(`<h2>Resultados para: ${q}</h2><p>${encontradas.length} tarea(s) encontradas</p>`);
+    const q = String(req.query.q || '').toLowerCase();
+    res.json({ consulta: q, resultados: tareas.filter(t => t.titulo.toLowerCase().includes(q)) });
   });
 
   app.get('/tareas', requiereSesion, (req, res) => {

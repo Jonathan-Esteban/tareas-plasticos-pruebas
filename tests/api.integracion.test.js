@@ -51,6 +51,13 @@ test('CP-07 flujo completo: asignar, avanzar, completar y no reabrir', async () 
   expect(r.body).toHaveLength(1);
 });
 
+test('CP-08 la búsqueda devuelve JSON y no refleja HTML', async () => {
+  await crearTarea();
+  const r = await request(app).get('/buscar?q=<script>alert(1)</script>').set(como('op1'));
+  expect(r.headers['content-type']).toMatch(/application\/json/);
+  expect(r.body.resultados).toHaveLength(0);
+});
+
 test('eliminar: 404 si no existe, 204 si existe, 403 operario', async () => {
   const { body } = await crearTarea();
   await request(app).delete(`/tareas/${body.id}`).set(como('op1')).expect(403);
