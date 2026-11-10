@@ -1,0 +1,16 @@
+{
+  "name": "tareas-plasticos-api",
+  "version": "1.0.0",
+  "description": "API de gestión de tareas - Plásticos Sustentables (proyecto de pruebas)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageThreshold": { "global": { "lines": 80 } }
+  },
+  "dependencies": { "express": "^4.21.2" },
+  "devDependencies": { "jest": "^29.7.0", "supertest": "^7.0.0" }
+}
