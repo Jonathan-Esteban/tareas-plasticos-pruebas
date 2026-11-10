@@ -1,0 +1,41 @@
+name: CI pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unitarias-integracion:
+    name: Jest (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npx jest --coverage --coverageReporters=text --coverageReporters=text-summary
+
+  rendimiento:
+    name: Carga con k6
+    needs: unitarias-integracion
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Levantar la API
+        run: |
+          npm start &
+          npx --yes wait-on http://localhost:3000/salud
+      - uses: grafana/setup-k6-action@v1
+      - uses: grafana/run-k6-action@v1
+        with:
+          path: perf/carga.js
